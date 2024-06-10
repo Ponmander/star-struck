@@ -1,0 +1,1189 @@
+#import newenemy/Tatanga/Tatanga.bpat
+#import newenemy/Tatanga/Chikako.bpat
+%#import newenemy/Watinga/Watinga.bpat
+% #import newenemy/KingBoo/KingBoo.bpat
+% #import newenemy/KingBoo/KingBooClone.bpat
+
+
+#new:StageTable $StageTable
+{
+% "mim_01" $Stage_Forest
+% "stz_00" $Stage_StarRoad
+"stz_00" $Stage_StarZone
+% "mod_00" $Stage_Test
+% "lmn_00" $Stage_Courtyard
+% "wrh_00" $Stage_Warehouse
+00000000 00000000
+}
+
+/%
+#new:Function $Function_80218360
+{
+    0:  ADDIU		SP, SP, FFE8
+    4:  SW			RA, 10 (SP)
+    8:  JAL			8011BB50
+    C:  NOP
+   10:  ADDIU		A0, R0, 3B6
+   14:  JAL			8011BB74
+   18:  ADDIU		A1, R0, 3E8
+   1C:  ADDIU		A0, R0, 10
+   20:  COPY		A1, A0
+   24:  COPY		A2, A0
+   28:  JAL			~Func:set_world_fog_color
+   2C:  ADDIU		A3, R0, FF
+   30:  LIA			V0, 800B1D80
+   38:  ADDIU		V1, R0, 14
+   3C:  SH			V1, 584 (V0)
+   40:  SH			V1, 586 (V0)
+   44:  ADDIU		V1, R0, 1C
+   48:  SH			V1, 588 (V0)
+   4C:  LW			RA, 10 (SP)
+   50:  ADDIU		V0, R0, 2
+   54:  JR			RA
+   58:  ADDIU		SP, SP, 18
+}
+
+#new:Script $Script_BeforeBattle_Forest
+{
+    %Call     SetSpriteShading 	( FFFFFFFF )
+    Call     $Function_80218360 ( )
+    Return
+    End
+}
+
+#new:Script $Script_AfterBattle_Forest
+{
+    Return
+    End
+}
+
+#new:Stage $Stage_Forest
+{
+"mim_tex"  % mim_tex
+"mim_bt01_shape"  % mim_bt01_shape
+"mim_bt01_hit"  % mim_bt01_hit
+$Script_BeforeBattle_Forest
+$Script_AfterBattle_Forest
+00000000
+00000000
+00000000
+00000000
+00000000
+}
+%/
+
+/%
+#new:Function $Function_GFX_YellowStars
+{
+    ADDIU     SP, SP, FFC0
+    SW        S3, 2C (SP)
+    ADDIU     S3, A0, FFFF
+    COPY      A0, S3
+    ADDIU     A1, SP, 10
+    ADDIU     A2, SP, 14
+    ADDIU     A3, SP, 18
+    SW        RA, 3C (SP)
+    SW        S6, 38 (SP)
+    SW        S5, 34 (SP)
+    SW        S4, 30 (SP)
+    SW        S2, 28 (SP)
+    SW        S1, 24 (SP)
+    JAL       ~Func:mdl_get_copied_vertices
+    SW        S0, 20 (SP)
+    LW        V0, 18 (SP)
+    BLEZ      V0, .o188
+    CLEAR     S0
+    LA        V1, $???_80224BB0
+    SLL       V0, S3, 1
+    ADDU      S5, V0, V1
+    LI        S4, 55555556
+    ORI       S6, R0, 8000
+    MULT      S0, S4
+        .o68
+    SRA       S2, S0, 1F
+    MFHI      V1
+    SUBU      V1, V1, S2
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      V0, S0, V0
+    LHU       V1, 0 (S5)
+    ADDIU     V0, V0, 1
+    MULT      V1, V0
+    SLL       V0, S0, 4
+    MFLO      V1
+    ADDU      A0, V1, S0
+    LW        V1, 14 (SP)
+    ANDI      A0, A0, FFFF
+    JAL       ~Func:sins
+    ADDU      S1, V1, V0
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    ADDU      V0, V0, S6
+    SRL       V1, V0, 1F
+    ADDU      V0, V0, V1
+    SLL       V0, V0, F
+    SRA       V0, V0, 10
+    SLL       V1, V0, 2
+    ADDU      V1, V1, V0
+    SLL       V0, V1, 5
+    SUBU      V1, V0, V1
+    BGEZ      V1, .oE0
+    COPY      V0, V1
+    ADDIU     V0, V1, 7FFF
+        .oE0
+    SRA       V0, V0, F
+    ADDIU     V0, V0, 64
+    SB        V0, C (S1)
+    SUBU      V1, S0, S2
+    SRA       A1, V1, 1
+    MULT      A1, S4
+    SB        V0, D (S1)
+    LHU       A0, 0 (S5)
+    SRA       V1, V1, 1F
+    SRL       A2, A0, F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      A1, A1, V0
+    ADDIU     A1, A1, 1
+    SLL       A1, A1, F
+    MULT      A2, A1
+    SRL       A0, A0, E
+    SLL       A0, A0, F
+    MFLO      V1
+    ADDU      A0, V1, A0
+    ADDU      A0, A0, S0
+    JAL       ~Func:sins
+    ANDI      A0, A0, FFFF
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    LBU       V1, C (S1)
+    ADDU      V0, V0, S6
+    MULT      V1, V0
+    MFLO      V1
+    BGEZ      V1, .o170
+    SRA       V0, V1, 10
+    ORI       V0, R0, FFFF
+    ADDU      V1, V1, V0
+    SRA       V0, V1, 10
+        .o170
+    SB        V0, E (S1)
+    LW        V0, 18 (SP)
+    ADDIU     S0, S0, 1
+    SLT       V0, S0, V0
+    BNE       V0, R0, .o68
+    MULT      S0, S4
+        .o188
+    LA        V1, 8009A66C
+    LW        V0, 0 (V1)
+    COPY      A0, S3
+    COPY      S0, V0
+    ADDIU     V0, V0, 8
+    SW        V0, 0 (V1)
+    LUI       V0, DE00
+    JAL       ~Func:mdl_get_copied_gfx
+    SW        V0, 0 (S0)
+    SW        V0, 4 (S0)
+    LA        V0, $???_80224BB0
+    SLL       V1, S3, 1
+    ADDU      V1, V1, V0
+    LHU       V0, 0 (V1)
+    ADDIU     V0, V0, 253
+    SH        V0, 0 (V1)
+    LW        RA, 3C (SP)
+    LW        S6, 38 (SP)
+    LW        S5, 34 (SP)
+    LW        S4, 30 (SP)
+    LW        S3, 2C (SP)
+    LW        S2, 28 (SP)
+    LW        S1, 24 (SP)
+    LW        S0, 20 (SP)
+    JR        RA
+    ADDIU     SP, SP, 40
+}
+
+#new:Unknown $???_80224BB0
+{
+	00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+}
+
+#new:Function $Function_GFX_BlueStars
+{
+    ADDIU     SP, SP, FFB8
+    SW        S2, 28 (SP)
+    ADDIU     S2, A0, FFFF
+    COPY      A0, S2
+    ADDIU     A1, SP, 10
+    ADDIU     A2, SP, 14
+    SW        RA, 3C (SP)
+    SW        S6, 38 (SP)
+    SW        S5, 34 (SP)
+    SW        S4, 30 (SP)
+    SW        S3, 2C (SP)
+    SW        S1, 24 (SP)
+    SW        S0, 20 (SP)
+    SDC1      F20, 40 (SP)
+    JAL       ~Func:mdl_get_copied_vertices
+    ADDIU     A3, SP, 18
+    LW        V0, 18 (SP)
+    BLEZ      V0, .o2A4
+    CLEAR     S0
+    LA        V1, $???_80224BB0
+    SLL       V0, S2, 1
+    ADDU      S4, V0, V1
+    LI        S3, 55555556
+    ORI       S6, R0, 8000
+    LIF       F21, 28.0
+    MTC1      R0, F20
+    LUI       S5, 8000
+    MULT      S0, S3
+        .o7C
+    SRA       V1, S0, 1F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      V0, S0, V0
+    LHU       V1, 0 (S4)
+    ADDIU     V0, V0, 1
+    MULT      V1, V0
+    LW        V0, 14 (SP)
+    MFLO      V1
+    ADDU      A0, V1, S0
+    ANDI      A0, A0, FFFF
+    SLL       V1, S0, 4
+    ADDU      V0, V0, V1
+    JAL       ~Func:sins
+    ADDIU     S1, V0, C
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    ADDU      V0, V0, S6
+    SRL       V1, V0, 1F
+    ADDU      V0, V0, V1
+    SRA       V0, V0, 1
+    SLL       V1, V0, 10
+    SRA       V1, V1, 10
+    SLL       A0, V1, 2
+    ADDU      A0, A0, V1
+    SLL       V1, A0, 5
+    SUBU      V1, V1, A0
+    BGEZ      V1, .oFC
+    COPY      A0, V0
+    ADDIU     V1, V1, 7FFF
+        .oFC
+    SRA       V0, V1, F
+    LAD       F2, $ConstDouble_80225FB0
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o138
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o14C
+    SB        V0, 0 (S1)
+        .o138
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (S1)
+        .o14C
+    SLL       V0, A0, 10
+    SRA       V0, V0, 10
+    SLL       V1, V0, 2
+    ADDU      V1, V1, V0
+    SLL       V0, V1, 5
+    SUBU      V0, V0, V1
+    BGEZ      V0, .o170
+    ADDIU     V1, S1, 1
+    ADDIU     V0, V0, 7FFF
+        .o170
+    SRA       V0, V0, F
+    LAD       F2, $ConstDouble_80225FB8
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o1AC
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o1C0
+    SB        V0, 0 (V1)
+        .o1AC
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (V1)
+        .o1C0
+    SRL       V1, S0, 1F
+    ADDU      V1, S0, V1
+    SRA       A1, V1, 1
+    MULT      A1, S3
+    LHU       A0, 0 (S4)
+    SRA       V1, V1, 1F
+    SRL       A2, A0, F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      A1, A1, V0
+    ADDIU     A1, A1, 1
+    SLL       A1, A1, F
+    MULT      A2, A1
+    SRL       A0, A0, E
+    SLL       A0, A0, F
+    MFLO      V1
+    ADDU      A0, V1, A0
+    ADDU      A0, A0, S0
+    JAL       ~Func:sins
+    ANDI      A0, A0, FFFF
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    LBU       V1, 0 (S1)
+    ADDU      V0, V0, S6
+    MULT      V1, V0
+    MFLO      V1
+    BGEZ      V1, .o240
+    ADDIU     A0, S1, 2
+    ORI       V0, R0, FFFF
+    ADDU      V1, V1, V0
+        .o240
+    SRA       V0, V1, 10
+    LAD       F2, $ConstDouble_80225FC0
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o27C
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o290
+    SB        V0, 0 (A0)
+        .o27C
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (A0)
+        .o290
+    LW        V0, 18 (SP)
+    ADDIU     S0, S0, 1
+    SLT       V0, S0, V0
+    BNE       V0, R0, .o7C
+    MULT      S0, S3
+        .o2A4
+    LA        V1, 8009A66C
+    LW        V0, 0 (V1)
+    COPY      A0, S2
+    COPY      S0, V0
+    ADDIU     V0, V0, 8
+    SW        V0, 0 (V1)
+    LUI       V0, DE00
+    JAL       ~Func:mdl_get_copied_gfx
+    SW        V0, 0 (S0)
+    SW        V0, 4 (S0)
+    LA        V0, $???_80224BB0
+    SLL       V1, S2, 1
+    ADDU      V1, V1, V0
+    LHU       V0, 0 (V1)
+    ADDIU     V0, V0, 253
+    SH        V0, 0 (V1)
+    LW        RA, 3C (SP)
+    LW        S6, 38 (SP)
+    LW        S5, 34 (SP)
+    LW        S4, 30 (SP)
+    LW        S3, 2C (SP)
+    LW        S2, 28 (SP)
+    LW        S1, 24 (SP)
+    LW        S0, 20 (SP)
+    LDC1      F20, 40 (SP)
+    JR        RA
+    ADDIU     SP, SP, 48
+}
+
+#new:ConstDouble $ConstDouble_80225FB0
+{
+	48.627451d
+}
+
+#new:ConstDouble $ConstDouble_80225FB8
+{
+	89.411765d
+}
+
+#new:ConstDouble $ConstDouble_80225FC0
+{
+	99.607843d
+}
+
+#new:Function $Function_GFX_GreenStars
+{
+    ADDIU     SP, SP, FFB8
+    SW        S2, 28 (SP)
+    ADDIU     S2, A0, FFFF
+    COPY      A0, S2
+    ADDIU     A1, SP, 10
+    ADDIU     A2, SP, 14
+    SW        RA, 3C (SP)
+    SW        S6, 38 (SP)
+    SW        S5, 34 (SP)
+    SW        S4, 30 (SP)
+    SW        S3, 2C (SP)
+    SW        S1, 24 (SP)
+    SW        S0, 20 (SP)
+    SDC1      F20, 40 (SP)
+    JAL       ~Func:mdl_get_copied_vertices
+    ADDIU     A3, SP, 18
+    LW        V0, 18 (SP)
+    BLEZ      V0, .o2A8
+    CLEAR     S0
+    LA        V1, $???_80224BB0
+    SLL       V0, S2, 1
+    ADDU      S4, V0, V1
+    LI        S3, 55555556
+    ORI       S6, R0, 8000
+    LIF       F21, 28.0
+    MTC1      R0, F20
+    LUI       S5, 8000
+    MULT      S0, S3
+        .o7C
+    SRA       V1, S0, 1F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      V0, S0, V0
+    LHU       V1, 0 (S4)
+    ADDIU     V0, V0, 1
+    MULT      V1, V0
+    LW        V0, 14 (SP)
+    MFLO      V1
+    ADDU      A0, V1, S0
+    ANDI      A0, A0, FFFF
+    SLL       V1, S0, 4
+    ADDU      V0, V0, V1
+    JAL       ~Func:sins
+    ADDIU     S1, V0, C
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    ADDU      V0, V0, S6
+    SRL       V1, V0, 1F
+    ADDU      V0, V0, V1
+    SRA       V0, V0, 1
+    SLL       V1, V0, 10
+    SRA       V1, V1, 10
+    SLL       A0, V1, 2
+    ADDU      A0, A0, V1
+    SLL       V1, A0, 5
+    SUBU      V1, V1, A0
+    BGEZ      V1, .oFC
+    COPY      A0, V0
+    ADDIU     V1, V1, 7FFF
+        .oFC
+    SRA       V0, V1, F
+    LAD       F2, $ConstDouble_80225FC8
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o138
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o14C
+    SB        V0, 0 (S1)
+        .o138
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (S1)
+        .o14C
+    SLL       V0, A0, 10
+    SRA       V0, V0, 10
+    SLL       V1, V0, 2
+    ADDU      V1, V1, V0
+    SLL       V0, V1, 5
+    SUBU      V0, V0, V1
+    BGEZ      V0, .o170
+    ADDIU     V1, S1, 1
+    ADDIU     V0, V0, 7FFF
+        .o170
+    SRA       V0, V0, F
+    LIF       F3, 3.390625
+    MTC1      R0, F2
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o1B0
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o1C4
+    SB        V0, 0 (V1)
+        .o1B0
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (V1)
+        .o1C4
+    SRL       V1, S0, 1F
+    ADDU      V1, S0, V1
+    SRA       A1, V1, 1
+    MULT      A1, S3
+    LHU       A0, 0 (S4)
+    SRA       V1, V1, 1F
+    SRL       A2, A0, F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      A1, A1, V0
+    ADDIU     A1, A1, 1
+    SLL       A1, A1, F
+    MULT      A2, A1
+    SRL       A0, A0, E
+    SLL       A0, A0, F
+    MFLO      V1
+    ADDU      A0, V1, A0
+    ADDU      A0, A0, S0
+    JAL       ~Func:sins
+    ANDI      A0, A0, FFFF
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    LBU       V1, 0 (S1)
+    ADDU      V0, V0, S6
+    MULT      V1, V0
+    MFLO      V1
+    BGEZ      V1, .o244
+    ADDIU     A0, S1, 2
+    ORI       V0, R0, FFFF
+    ADDU      V1, V1, V0
+        .o244
+    SRA       V0, V1, 10
+    LAD       F2, $ConstDouble_80225FD0
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o280
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o294
+    SB        V0, 0 (A0)
+        .o280
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (A0)
+        .o294
+    LW        V0, 18 (SP)
+    ADDIU     S0, S0, 1
+    SLT       V0, S0, V0
+    BNE       V0, R0, .o7C
+    MULT      S0, S3
+        .o2A8
+    LA        V1, 8009A66C
+    LW        V0, 0 (V1)
+    COPY      A0, S2
+    COPY      S0, V0
+    ADDIU     V0, V0, 8
+    SW        V0, 0 (V1)
+    LUI       V0, DE00
+    JAL       ~Func:mdl_get_copied_gfx
+    SW        V0, 0 (S0)
+    SW        V0, 4 (S0)
+    LA        V0, $???_80224BB0
+    SLL       V1, S2, 1
+    ADDU      V1, V1, V0
+    LHU       V0, 0 (V1)
+    ADDIU     V0, V0, 253
+    SH        V0, 0 (V1)
+    LW        RA, 3C (SP)
+    LW        S6, 38 (SP)
+    LW        S5, 34 (SP)
+    LW        S4, 30 (SP)
+    LW        S3, 2C (SP)
+    LW        S2, 28 (SP)
+    LW        S1, 24 (SP)
+    LW        S0, 20 (SP)
+    LDC1      F20, 40 (SP)
+    JR        RA
+    ADDIU     SP, SP, 48
+}
+
+#new:ConstDouble $ConstDouble_80225FC8
+{
+	67.450980d
+}
+
+#new:ConstDouble $ConstDouble_80225FD0
+{
+	59.215686d
+}
+
+#new:Function $Function_GFX_PinkStars
+{
+    ADDIU     SP, SP, FFB8
+    SW        S2, 28 (SP)
+    ADDIU     S2, A0, FFFF
+    COPY      A0, S2
+    ADDIU     A1, SP, 10
+    ADDIU     A2, SP, 14
+    SW        RA, 3C (SP)
+    SW        S6, 38 (SP)
+    SW        S5, 34 (SP)
+    SW        S4, 30 (SP)
+    SW        S3, 2C (SP)
+    SW        S1, 24 (SP)
+    SW        S0, 20 (SP)
+    SDC1      F20, 40 (SP)
+    JAL       ~Func:mdl_get_copied_vertices
+    ADDIU     A3, SP, 18
+    LW        V0, 18 (SP)
+    BLEZ      V0, .o2A8
+    CLEAR     S0
+    LA        V1, $???_80224BB0
+    SLL       V0, S2, 1
+    ADDU      S4, V0, V1
+    LI        S3, 55555556
+    ORI       S6, R0, 8000
+    LIF       F21, 28.0
+    MTC1      R0, F20
+    LUI       S5, 8000
+    MULT      S0, S3
+        .o7C
+    SRA       V1, S0, 1F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      V0, S0, V0
+    LHU       V1, 0 (S4)
+    ADDIU     V0, V0, 1
+    MULT      V1, V0
+    LW        V0, 14 (SP)
+    MFLO      V1
+    ADDU      A0, V1, S0
+    ANDI      A0, A0, FFFF
+    SLL       V1, S0, 4
+    ADDU      V0, V0, V1
+    JAL       ~Func:sins
+    ADDIU     S1, V0, C
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    ADDU      V0, V0, S6
+    SRL       V1, V0, 1F
+    ADDU      V0, V0, V1
+    SRA       V0, V0, 1
+    SLL       V1, V0, 10
+    SRA       V1, V1, 10
+    SLL       A0, V1, 2
+    ADDU      A0, A0, V1
+    SLL       V1, A0, 5
+    SUBU      V1, V1, A0
+    BGEZ      V1, .oFC
+    COPY      A0, V0
+    ADDIU     V1, V1, 7FFF
+        .oFC
+    SRA       V0, V1, F
+    LIF       F3, 3.390625
+    MTC1      R0, F2
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o13C
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o150
+    SB        V0, 0 (S1)
+        .o13C
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (S1)
+        .o150
+    SLL       V0, A0, 10
+    SRA       V0, V0, 10
+    SLL       V1, V0, 2
+    ADDU      V1, V1, V0
+    SLL       V0, V1, 5
+    SUBU      V0, V0, V1
+    BGEZ      V0, .o174
+    ADDIU     V1, S1, 1
+    ADDIU     V0, V0, 7FFF
+        .o174
+    SRA       V0, V0, F
+    LAD       F2, $ConstDouble_80225FD8
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o1B0
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o1C4
+    SB        V0, 0 (V1)
+        .o1B0
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (V1)
+        .o1C4
+    SRL       V1, S0, 1F
+    ADDU      V1, S0, V1
+    SRA       A1, V1, 1
+    MULT      A1, S3
+    LHU       A0, 0 (S4)
+    SRA       V1, V1, 1F
+    SRL       A2, A0, F
+    MFHI      T1
+    SUBU      V1, T1, V1
+    SLL       V0, V1, 1
+    ADDU      V0, V0, V1
+    SUBU      A1, A1, V0
+    ADDIU     A1, A1, 1
+    SLL       A1, A1, F
+    MULT      A2, A1
+    SRL       A0, A0, E
+    SLL       A0, A0, F
+    MFLO      V1
+    ADDU      A0, V1, A0
+    ADDU      A0, A0, S0
+    JAL       ~Func:sins
+    ANDI      A0, A0, FFFF
+    SLL       V0, V0, 10
+    SRA       V0, V0, 10
+    LBU       V1, 0 (S1)
+    ADDU      V0, V0, S6
+    MULT      V1, V0
+    MFLO      V1
+    BGEZ      V1, .o244
+    ADDIU     A0, S1, 2
+    ORI       V0, R0, FFFF
+    ADDU      V1, V1, V0
+        .o244
+    SRA       V0, V1, 10
+    LAD       F2, $ConstDouble_80225FE0
+    MTC1      V0, F0
+    NOP
+    CVT.D.W   F0, F0
+    ADD.D     F0, F0, F2
+    C.LE.D    F20, F0
+    NOP
+    BC1TL     .o280
+    SUB.D     F0, F0, F20
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    BEQ       R0, R0, .o294
+    SB        V0, 0 (A0)
+        .o280
+    TRUNC.W.D F4, F0
+    MFC1      V0, F4
+    NOP
+    OR        V0, V0, S5
+    SB        V0, 0 (A0)
+        .o294
+    LW        V0, 18 (SP)
+    ADDIU     S0, S0, 1
+    SLT       V0, S0, V0
+    BNE       V0, R0, .o7C
+    MULT      S0, S3
+        .o2A8
+    LA        V1, 8009A66C
+    LW        V0, 0 (V1)
+    COPY      A0, S2
+    COPY      S0, V0
+    ADDIU     V0, V0, 8
+    SW        V0, 0 (V1)
+    LUI       V0, DE00
+    JAL       ~Func:mdl_get_copied_gfx
+    SW        V0, 0 (S0)
+    SW        V0, 4 (S0)
+    LA        V0, $???_80224BB0
+    SLL       V1, S2, 1
+    ADDU      V1, V1, V0
+    LHU       V0, 0 (V1)
+    ADDIU     V0, V0, 253
+    SH        V0, 0 (V1)
+    LW        RA, 3C (SP)
+    LW        S6, 38 (SP)
+    LW        S5, 34 (SP)
+    LW        S4, 30 (SP)
+    LW        S3, 2C (SP)
+    LW        S2, 28 (SP)
+    LW        S1, 24 (SP)
+    LW        S0, 20 (SP)
+    LDC1      F20, 40 (SP)
+    JR        RA
+    ADDIU     SP, SP, 48
+}
+
+#new:ConstDouble $ConstDouble_80225FD8
+{
+	80.392157d
+}
+
+#new:ConstDouble $ConstDouble_80225FE0
+{
+	96.078431d
+}
+
+#new:Script $Script_BeforeBattle_StarRoad
+{
+    Call  SetSpriteShading      ( FFFFFFFF )
+    Call  MakeLocalVertexCopy   ( 00000000 ~Model:hos_bt01:o345 .True )
+    Call  SetCustomGfxBuilders  ( 00000001 $Function_GFX_YellowStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o345 00000001 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o345 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000001 ~Model:hos_bt01:o338 .True )
+    Call  SetCustomGfxBuilders  ( 00000002 $Function_GFX_YellowStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o338 00000002 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o338 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000002 ~Model:hos_bt01:o344 .True )
+    Call  SetCustomGfxBuilders  ( 00000003 $Function_GFX_YellowStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o344 00000003 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o344 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000003 ~Model:hos_bt01:o354 .True )
+    Call  SetCustomGfxBuilders  ( 00000004 $Function_GFX_YellowStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o354 00000004 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o354 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000004 ~Model:hos_bt01:o341 .True )
+    Call  SetCustomGfxBuilders  ( 00000005 $Function_GFX_YellowStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o341 00000005 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o341 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000005 ~Model:hos_bt01:o352 .True )
+    Call  SetCustomGfxBuilders  ( 00000006 $Function_GFX_BlueStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o352 00000006 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o352 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000006 ~Model:hos_bt01:o346 .True )
+    Call  SetCustomGfxBuilders  ( 00000007 $Function_GFX_BlueStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o346 00000007 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o346 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000007 ~Model:hos_bt01:o349 .True )
+    Call  SetCustomGfxBuilders  ( 00000008 $Function_GFX_GreenStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o349 00000008 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o349 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000008 ~Model:hos_bt01:o353 .True )
+    Call  SetCustomGfxBuilders  ( 00000009 $Function_GFX_GreenStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o353 00000009 FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o353 00000080 .True )
+    Call  MakeLocalVertexCopy   ( 00000009 ~Model:hos_bt01:o347 .True )
+    Call  SetCustomGfxBuilders  ( 0000000A $Function_GFX_PinkStars 00000000 )
+    Call  SetModelCustomGfx     ( ~Model:hos_bt01:o347 0000000A FFFFFFFF )
+    Call  SetModelFlags ( ~Model:hos_bt01:o347 00000080 .True )
+    Thread
+        Call  SetTexPanner  ( ~Model:hos_bt01:o332 00000000 )
+        Call  SetTexPanner  ( ~Model:hos_bt01:o334 00000000 )
+        Call  SetTexPanner  ( ~Model:hos_bt01:o333 00000000 )
+        Call  SetTexPanner  ( ~Model:hos_bt01:o336 00000000 )
+        Set   *Var0  00000000
+        Set   *Var1  00000000
+        Set   *Var2  00000000
+        Set   *Var3  00000000
+        Loop
+            Add   *Var0  00000050
+            Add   *Var1  FFFFFF6A
+            If  *Var0  >  00008000
+                Add   *Var0  FFFF8000
+            EndIf
+            If  *Var1  <  FFFF8000
+                Add   *Var1  00008000
+            EndIf
+            Add   *Var2  FFFFFFCE
+            Add   *Var3  00000064
+            If  *Var2  <  FFFF8000
+                Add   *Var2  00008000
+            EndIf
+            If  *Var3  >  00008000
+                Add   *Var3  FFFF8000
+            EndIf
+            Call  SetTexPanOffset   ( 00000000 00000000 *Var0 *Var1 )
+            Call  SetTexPanOffset   ( 00000000 00000001 *Var2 *Var3 )
+            Wait  1`
+        EndLoop
+    EndThread
+    Thread
+        Label  2
+        Call  MakeLerp  ( FFFFFFF9 00000007 0000001E .Easing:CosInOut )
+        Label  0
+        Call  UpdateLerp ( )
+        Call  TranslateModel    ( ~Model:hos_bt01:o357 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o344 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o361 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o354 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o341 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o362 00000000 *Var0 00000000 )
+        Wait  1`
+        If  *Var1  ==  00000001
+            Goto  0
+        EndIf
+        Call  MakeLerp  ( 00000007 FFFFFFF9 0000001E .Easing:CosInOut )
+        Label  1
+        Call  UpdateLerp ( )
+        Call  TranslateModel    ( ~Model:hos_bt01:o357 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o344 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o361 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o354 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o341 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o362 00000000 *Var0 00000000 )
+        Wait  1`
+        If  *Var1  ==  00000001
+            Goto  1
+        EndIf
+        Goto  2
+    EndThread
+    Thread
+        Label  3
+        Call  MakeLerp  ( 00000007 FFFFFFF9 0000001E .Easing:CosInOut )
+        Label  4
+        Call  UpdateLerp ( )
+        Call  TranslateModel    ( ~Model:hos_bt01:o363 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o343 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o355 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o338 00000000 *Var0 00000000 )
+        Wait  1`
+        If  *Var1  ==  00000001
+            Goto  4
+        EndIf
+        Call  MakeLerp  ( FFFFFFF9 00000007 0000001E .Easing:CosInOut )
+        Label  5
+        Call  UpdateLerp ( )
+        Call  TranslateModel    ( ~Model:hos_bt01:o363 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o343 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o355 00000000 *Var0 00000000 )
+        Call  TranslateModel    ( ~Model:hos_bt01:o338 00000000 *Var0 00000000 )
+        Wait  1`
+        If  *Var1  ==  00000001
+            Goto  5
+        EndIf
+        Goto  3
+    EndThread
+    Return
+    End
+}
+
+#new:Script $Script_AfterBattle_StarRoad
+{
+    Return
+    End
+}
+
+#new:ForegroundModelList $ForegroundModelList_StarRoad
+{
+	~Model:hos_bt01:o345
+	00000000
+}
+
+#new:Stage $Stage_StarRoad
+{
+	"hos_tex"  % hos_tex
+	"hos_bt01_shape"  % hos_bt01_shape
+	"hos_bt01_hit"  % hos_bt01_hit
+	$Script_BeforeBattle_StarRoad
+	$Script_AfterBattle_StarRoad
+	"hos_bg"  % hos_bg
+	$ForegroundModelList_StarRoad
+	00000000
+	00000000
+	00000000
+}
+%/
+
+% #new:Stage $Stage_Test
+% {
+% 	"aaa_tex"
+% 	"mod_bt00_shape"
+% 	"mod_bt00_hit"
+% 	00000000
+% 	00000000
+% 	"aaa_bg"
+% 	00000000
+% 	00000000
+% 	00000000
+% 	00000000
+% }
+
+#new:Stage $Stage_StarZone
+{
+	"stz_tex"
+	"stz_bt00_shape"
+	"stz_bt00_hit"
+	00000000
+	00000000
+	"stz_bg"
+	00000000
+	00000000
+	00000000
+	00000000
+}
+
+% #new:Stage $Stage_Courtyard
+% {
+% 	"lmn_tex"
+% 	"lmn_bt00_shape"
+% 	"lmn_bt00_hit"
+% 	$Script_BeforeBattle_Courtyard
+% 	00000000
+% 	"lmn_bg"
+% 	00000000
+% 	00000000
+% 	00000000
+% 	00000000
+% }
+
+/%
+#new:Function $Function_SetupFog
+{
+	PUSH RA
+	JAL       8011BB50
+	NOP
+	ADDIU     A0, R0, 3CF
+	JAL       8011BB74
+	ADDIU     A1, R0, 3E8
+	ADDIU     A0, R0, A
+	ADDIU     A1, R0, A
+	ADDIU     A2, R0, A
+	JAL       8011BB88
+	ADDIU     A3, R0, FF
+	ADDIU     V0, R0, 2
+	JPOP RA
+}
+%/
+
+% #new:Script $Script_BeforeBattle_Courtyard
+% {
+%     %Exec  $Script_SetupTexturePan
+%     %Call  $Function_SetupFog
+%     Return
+%     End
+% }
+
+/%
+#new:Script $Script_SetupTexturePan
+{
+    Thread
+        Set   *Var0  0` 	% Tex Pan ID
+        Set   *Var1  100` 	% Main U
+        Set   *Var2  0	    % Main V
+        Set   *Var3  0		% Aux U
+        Set   *Var4  0		% Aux V
+        Set   *Var5  0
+        Set   *Var6  0
+        Set   *Var7  0
+        Set   *Var8  0
+        Set   *Var9  0
+        Set   *VarA  0
+        Set   *VarB  0
+        Set   *VarC  0
+        Exec  $Script_TexturePan_Update
+
+		Set   *Var0  1`     % Tex Pan ID
+        Set   *Var1  100`   % Main U
+        Set   *Var2  0      % Main V
+        Set   *Var3  0      % Aux U
+        Set   *Var4  0      % Aux V
+        Set   *Var5  0
+        Set   *Var6  0
+        Set   *Var7  0
+        Set   *Var8  0
+        Set   *Var9  0
+        Set   *VarA  0
+        Set   *VarB  0
+        Set   *VarC  0
+        Exec  $Script_TexturePan_Update
+    EndThread
+	Call     SetTexPanner 	( ~Model:lmn_bt00:MistL 0` )
+	Call     SetTexPanner 	( ~Model:lmn_bt00:MistR 1` )
+    Return
+    End
+}
+
+#new:Script $Script_TexturePan_Update
+{
+    SetGroup  0`
+    If  *Var5  ==  1`
+        If  *Var6  ==  1`
+            If  *Var7  ==  1`
+                If  *Var8  ==  1`
+                    Call  $Function_TexturePan_Simple ( )
+                    Return
+                EndIf
+            EndIf
+        EndIf
+    EndIf
+    Call  $Function_TexturePan_Complex ( )
+    Return
+    End
+}
+%/
+
+
+% #new:Vector3D $Vector3D_KingBoo
+% {
+% 70` 50` 5`
+% }
+
+% #new:Formation $Formation_02
+% {
+% $KingBoo $Vector3D_KingBoo 0000000A 00000000 00000000 00000000 00000000
+% }
+
+#new:Vector3D $Vector3D_Tatanga
+{
+75` 20` 20`
+}
+
+#new:Formation $Formation_01
+{
+$Tatanga $Vector3D_Tatanga 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Vector3D $Vector3D_Chikako1
+{
+10` 50` -20`
+}
+
+#new:Formation $Formation_00
+{
+    $Chikako $Vector3D_Chikako1 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_StarZone 00000000
+00000000 00000001 $Formation_01 $Stage_StarZone 00000000
+% 00000000 00000001 $Formation_02 $Stage_Courtyard 00000000
+00000000 0000000 00000000 00000000 00000000 % unused
+}

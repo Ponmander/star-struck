@@ -2,38 +2,192 @@ Anim	% namespace
 anim	% library name
 false	% reversed
 
-00950000 = WhiteBoo-Stop
-00950001 = WhiteBoo-Idle
-00950002 = WhiteBoo-Walk
-00950003 = WhiteBoo-Run
-00950004 = WhiteBoo-Talk
-00950005 = WhiteBoo-Wave
-00950006 = WhiteBoo-Pain
-00950007 = WhiteBoo-Hide
-00950008 = WhiteBoo-Spook
-00950009 = WhiteBoo-Denying
-0095000A = WhiteBoo-Skeptical
-0095000B = WhiteBoo-Throw
-0095000C = WhiteBoo-CarryingStop
-0095000D = WhiteBoo-CarryingIdle
-0095000E = WhiteBoo-CarryingWalk
-0095000F = WhiteBoo-CarryingRun
-00950010 = WhiteBoo-CarryingShake
+% Boo Animations
+00950000 = WhiteBoo_Stop
+00950001 = WhiteBoo_Idle
+00950002 = WhiteBoo_Walk
+00950003 = WhiteBoo_Run
+00950004 = WhiteBoo_Talk
+00950005 = WhiteBoo_Wave
+00950006 = WhiteBoo_Pain
+00950007 = WhiteBoo_Hide
+00950008 = WhiteBoo_Spook
+00950009 = WhiteBoo_Denying
+0095000A = WhiteBoo_Skeptical
+0095000B = WhiteBoo_Throw
+0095000C = WhiteBoo_CarryingStop
+0095000D = WhiteBoo_CarryingIdle
+0095000E = WhiteBoo_CarryingWalk
+0095000F = WhiteBoo_CarryingRun
+00950010 = WhiteBoo_CarryingShake
 
-00950100 = DustyBoo-Stop
-00950101 = DustyBoo-Idle
-00950102 = DustyBoo-Walk
-00950103 = DustyBoo-Run
-00950104 = DustyBoo-Talk
-00950105 = DustyBoo-Wave
-00950106 = DustyBoo-Pain
-00950107 = DustyBoo-Hide
-00950108 = DustyBoo-Spook
-00950109 = DustyBoo-Denying
-0095010A = DustyBoo-Skeptical
-0095010B = DustyBoo-Throw
-0095010C = DustyBoo-CarryingStop
-0095010D = DustyBoo-CarryingIdle
-0095010E = DustyBoo-CarryingWalk
-0095010F = DustyBoo-CarryingRun
-00950110 = DustyBoo-CarryingShake
+% Dusty Boo Animations
+00950100 = DustyBoo_Stop
+00950101 = DustyBoo_Idle
+00950102 = DustyBoo_Walk
+00950103 = DustyBoo_Run
+00950104 = DustyBoo_Talk
+00950105 = DustyBoo_Wave
+00950106 = DustyBoo_Pain
+00950107 = DustyBoo_Hide
+00950108 = DustyBoo_Spook
+00950109 = DustyBoo_Denying
+0095010A = DustyBoo_Skeptical
+0095010B = DustyBoo_Throw
+0095010C = DustyBoo_CarryingStop
+0095010D = DustyBoo_CarryingIdle
+0095010E = DustyBoo_CarryingWalk
+0095010F = DustyBoo_CarryingRun
+00950110 = DustyBoo_CarryingShake
+
+
+% Tatanga Animations
+009C0000 = Tatanga_BodyStill
+009C0001 = Tatanga_BodyIdle
+009C0002 = Tatanga_BodyTalk
+009C0003 = Tatanga_BodyPointTalk
+009C0004 = Tatanga_BodyJump
+009C0005 = Tatanga_Ship
+009C0006 = Tatanga_Still
+009C0007 = Tatanga_Idle
+009C0008 = Tatanga_Talk
+009C0009 = Tatanga_UnamusedIdle
+009C000A = Tatanga_UnamusedTalk
+009C000B = Tatanga_SmugIdle
+009C000C = Tatanga_SmugTalk
+009C000D = Tatanga_ShockIdle
+009C000E = Tatanga_ShockTalk
+009C000F = Tatanga_UnhappyIdle
+009C0010 = Tatanga_UnhappyTalk
+009C0011 = Tatanga_AngryIdle
+009C0012 = Tatanga_AngryTalk
+009C0013 = Tatanga_MockStart
+009C0014 = Tatanga_MockEnd
+009C0015 = Tatanga_Pain
+009C0016 = Tatanga_Dizzy
+009C0017 = Tatanga_HatchClose
+009C0018 = Tatanga_DarkIdle
+009C0019 = Tatanga_HatchOpen
+009C001A = Tatanga_ShotForwardStart
+009C001B = Tatanga_ShotForwardEnd
+009C001C = Tatanga_ShotMoon
+009C001D = Tatanga_ShotBiff
+009C001E = Tatanga_ShotBottom
+009C001F = Tatanga_ShotBall
+009C0020 = Tatanga_ShotBallOpen
+009C0021 = Tatanga_ShotFireworks
+009C0022 = Tatanga_ShotStarExplosion
+
+% Chikako Animations
+009C0023 = Chikako_Still
+009C0024 = Chikako_Idle
+009C0025 = Chikako_Charging
+009C0026 = Chikako_IdleCharged
+009C0027 = Chikako_Attack
+009C0028 = Chikako_PainNormal
+009C0029 = Chikako_Death
+
+% Unused Animation
+009C002A = Tatanga_UnusedIdle
+
+
+% King Boo Animations
+%00BF0000 = KingBoo_Still
+%00BF0001 = KingBoo_Idle
+%00BF0002 = KingBoo_Move
+%00BF0003 = KingBoo_MoveFast
+%00BF0004 = KingBoo_Hide
+%00BF0005 = KingBoo_Scare
+%00BF0006 = KingBoo_Fakeout
+%00BF0007 = KingBoo_Laugh
+%00BF0008 = KingBoo_CrownAttack
+%00BF0009 = KingBoo_FireBall
+%00BF000A = KingBoo_SpiritFire
+%00BF000B = KingBoo_Lightning
+%00BF000C = KingBoo_Hurt
+%00BF000D = KingBoo_Talk
+%00BF000E = KingBoo_Serious
+%00BF000F = KingBoo_Frustrated
+%00BF0010 = KingBoo_Slink
+%00BF0011 = KingBoo_SlinkTalk
+%00BF0012 = KingBoo_SlinkSerious
+%00BF0013 = KingBoo_GetAngry
+%00BF0014 = KingBoo_StayAngry
+%00BF0015 = KingBoo_Angry
+%00BF0016 = KingBoo_AngryTalk
+%00BF0017 = KingBoo_Boo
+%00BF0018 = KingBoo_BooLaugh
+%00BF0019 = KingBoo_BooAbsorb
+%00BF001A = KingBoo_BooAbsorbEnd
+%00BF001B = KingBoo_BooWell
+%00BF001C = KingBoo_BooWellSingle
+%00BF001D = KingBoo_DoubleScareFakeoutA
+%00BF001E = KingBoo_DoubleScareFakeoutB
+%00BF001F = KingBoo_CloneReact
+%00BF0020 = KingBoo_BooWellMany
+
+
+% Star Zone Star Animations
+00E80000 = MazeStar_100_Idle
+00E80001 = MazeStar_100_Move
+00E80002 = MazeStar_75_Idle
+00E80003 = MazeStar_50_Move
+
+
+% Watinga Animations
+
+% Fly Animations
+
+% Big Fly Animations
+
+% Fly Parent Animations
+
+% Fly Bomb Animations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% WUA Enemies %
+
+00300000 = Mini_Chuckya_Still
+00300001 = Mini_Chuckya_Idle
+00300002 = Mini_Chuckya_Run
+00300003 = Mini_Chuckya_Talk
+00300004 = Mini_Chuckya_Sleep
+
+00350000 = Ant_Trooper_Still
+00350001 = Ant_Trooper_Idle
+00350002 = Ant_Trooper_Walk
+00350003 = Ant_Trooper_Run
+00350004 = Ant_Trooper_Flail
+00350005 = Ant_Trooper_Hurt
+00350006 = Ant_Trooper_Dead
+00350007 = Ant_Trooper_Burn_Hurt
+00350008 = Ant_Trooper_Burn_Dead
+00350009 = Ant_Trooper_Sleep
+0035000A = Ant_Trooper_Dizzy

@@ -1,0 +1,230 @@
+#new:Data $blockWindow { 3 }
+#new:Data $blockWindowDodgeMaster { 5 }
+
+#export:Function $ScrAPI_getDodgeMasterBlockWindow {
+    PUSH ra
+    LW t0, 000C (a0)
+    LW a1, 0000 (t0) %var to set result to
+    LAW a2, $blockWindowDodgeMaster
+    JAL ~Func:set_variable
+    NOP
+    POP ra
+    JR RA
+    ORI v0, r0, 2
+}
+
+#export:Function $ScrAPI_getBlockWindow {
+    PUSH ra
+    LW t0, 000C (a0)
+    LW a1, 0000 (t0) %var to set result to
+    LAW a2, $blockWindow
+    JAL ~Func:set_variable
+    NOP
+    POP ra
+    JR RA
+    ORI v0, r0, 2
+}
+
+#export:Function $ScrAPI_setBlockWindow %arg1 normal block window, arg2 dodge master block window
+{
+    PUSH s0, ra
+    LW s0, 000C (a0)
+    
+    %get normal block window val to set
+    JAL ~Func:get_variable
+    LW a1, 0000 (s0)
+
+    LI t0, $blockWindow
+    SW v0, 0000 (t0) %set block window
+
+    %get dodge master block window val to set
+    JAL ~Func:get_variable
+    LW a1, 0004 (s0)
+
+    LI t0, $blockWindowDodgeMaster
+    SW v0, 0000 (t0) %set dodge master block window
+
+    POP s0, ra
+    JR RA
+    ORI v0, r0, 2
+}
+
+#define .Button_A 8000
+
+@Function:Battle 802779C4 {
+    JAL $check_block_input
+    ORI a0, r0, .Button_A
+}
+
+#export:Function $check_block_input {
+ ADDIU          SP, SP, -38
+ SW             S4, 0020 (SP)
+ DADDU          S4, A0, R0
+ SW             S7, 002C (SP)
+ DADDU          S7, R0, R0
+ SW             S1, 0014 (SP)
+ LUI            S1, 800E
+ ADDIU          S1, S1, C070
+ SW             S5, 0024 (SP)
+ LUI            S5, 8011
+ ADDIU          S5, S5, F290
+ SW             S6, 0028 (SP)
+ LUI            S6, 802A
+ ADDIU          S6, S6, FBE0
+ SW             RA, 0030 (SP)
+ SW             S3, 001C (SP)
+ SW             S2, 0018 (SP)
+ SW             S0, 0010 (SP)
+ LB             V1, 0083 (S1)
+ ADDIU          V0, R0, FFFF
+ BNE            V1, V0, .blabel1
+ SB             R0, 0087 (S1)
+ LW             V0, 0000 (S1)
+ LUI            V1, 0200
+ AND            V0, V0, V1
+ BEQ            V0, r0, .blabel1
+ ADDIU          V0, R0, 0001
+ SB             V0, 0087 (S1)
+ BEQ            r0, r0, .end
+ ADDIU          V0, R0, 0001
+.blabel1
+ LB             V0, 0083 (S1)
+ BEQ            V0, r0, .end
+ DADDU          V0, R0, R0
+ LUI            V0, 8007
+ LW             V0, 419C (V0)
+ LBU            V0, 00AA (V0)
+ ANDI           V0, V0, 0001
+ BNE            V0, r0, .end
+ DADDU          V0, R0, R0
+ LHU            V1, 0298 (S5)
+ SLTIU          V0, V1, 270F
+ BEQ            V0, r0, .blabel2
+ ADDIU          V0, V1, 0001
+ SH             V0, 0298 (S5)
+ BEQ            r0, r0, .blabel3
+ SH             R0, 006E (S6)
+.blabel9
+ BEQ            r0, r0, .blabel4
+ ADDIU          S7, R0, 0001
+.blabel13
+ ADDIU          V0, R0, 0001 %return blocked status (frame blocked can be found here)
+ SB             V0, 0087 (S1)
+ BEQ r0, r0,    .blabel5
+ ADDIU          S2, R0, 0001
+.blabel2
+ ADDIU          V0, R0, 0001
+ SH             V0, 006E (S6)
+.blabel3
+ DADDU          S2, R0, R0
+ %ADDIU          S0, R0, 0001 %B Button frame window
+ LAW s0, $blockWindow
+ LUI            V0, 800E
+ LW             V0, C070 (V0)
+ LUI            V1, 0008
+ AND            V0, V0, V1
+ BNE            V0, r0, .blabel6
+ ADDIU          S3, R0, 000A %10 frame cooldown between block inputs
+ JAL            800E9D48
+ DADDU          A0, S2, R0
+ BEQ           V0, r0, .blabel6
+ NOP
+ LAW s0, $blockWindowDodgeMaster
+ %ADDIU          S0, R0, 0001 %B button frame window with dodge master frames 
+.blabel6
+ LB             V1, 0431 (S1) %get input buffer array start index?
+ ADDU           V0, S3, S0 %add cooldown between blocks + frame window?
+ SUBU           V1, V1, V0 %subtract input buffer array start - cooldown to get location to start reading in buffer?
+ BLTL           V1, r0, .blabel7
+ ADDIU          V1, V1, 0040
+.blabel7
+ BEQ            S3, r0, .blabel4
+ DADDU          A0, R0, R0
+.blabel10
+ SLTI           V0, V1, 0040
+ BEQL           V0, r0, .blabel8
+ ADDIU          V1, V1, FFC0
+.blabel8
+ SLL            V0, V1, 2
+ ADDU           V0, S1, V0
+ LW             V0, 0330 (V0)
+ AND            V0, V0, S4
+ BNE            V0, r0, .blabel9
+ ADDIU          A0, A0, 0001
+ SLT            V0, A0, S3
+ BNE            V0, r0, .blabel10
+ ADDIU          V1, V1, 0001
+.blabel4
+ LB             V1, 0431 (S1)
+ SUBU           V1, V1, S0
+ BLTL           V1, r0, .blabel11
+ ADDIU          V1, V1, 0040
+.blabel11
+ BEQ            S0, r0, .blabel5
+ DADDU          A0, R0, R0
+.blabel14
+ SLTI           V0, V1, 0040
+ BEQL           V0, r0, .blabel12
+ ADDIU          V1, V1, FFC0
+.blabel12
+ SLL            V0, V1, 2
+ ADDU           V0, S1, V0
+ LW             V0, 0330 (V0)
+ AND            V0, V0, S4
+ BNE            V0, r0, .blabel13
+ ADDIU          A0, A0, 0001
+ SLT            V0, A0, S0
+ BNE            V0, r0, .blabel14
+ ADDIU          V1, V1, 0001
+.blabel5
+ BEQ            S7, r0, .blabel15
+ ADDIU          V0, R0, FFFF
+ SB             V0, 0087 (S1)
+ DADDU          S2, R0, R0
+.blabel15
+ ADDIU          V0, R0, 0001
+ BNE            S2, V0, .blabel16
+ ADDU           V0, S3, S0
+ LB             V1, 0431 (S1)
+ SUBU           V1, V1, V0
+ BLTL           V1, r0, .blabel17
+ ADDIU          V1, V1, 0040
+.blabel17
+ BEQ            V0, r0, .blabel16
+ DADDU          A0, R0, R0
+ DADDU          A1, V0, R0
+.blabel19
+ SLTI           V0, V1, 0040
+ BEQL           V0, r0, .blabel18
+ ADDIU          V1, V1, FFC0
+.blabel18
+ SLL            V0, V1, 2
+ ADDU           V0, S1, V0
+ SW             R0, 0330 (V0)
+ ADDIU          A0, A0, 0001
+ SLT            V0, A0, A1
+ BNE            V0, r0, .blabel19
+ ADDIU          V1, V1, 0001
+.blabel16
+ BEQ            S2, r0, .end
+ DADDU          V0, S2, R0
+ LH             V0, 006E (S6)
+ BNE            V0, r0, .end
+ DADDU          V0, S2, R0
+ LHU            V0, 029A (S5)
+ ADDIU          V0, V0, 0001
+ SH             V0, 029A (S5)
+ DADDU          V0, S2, R0
+.end
+ LW             RA, 0030 (SP)
+ LW             S7, 002C (SP)
+ LW             S6, 0028 (SP)
+ LW             S5, 0024 (SP)
+ LW             S4, 0020 (SP)
+ LW             S3, 001C (SP)
+ LW             S2, 0018 (SP)
+ LW             S1, 0014 (SP)
+ LW             S0, 0010 (SP)
+ JR             RA
+ ADDIU          SP, SP, 38
+}

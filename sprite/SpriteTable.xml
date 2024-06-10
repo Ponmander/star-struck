@@ -156,7 +156,7 @@
 		<Sprite id="99" src="99" name="Bubulb"/>
 		<Sprite id="9A" src="9A" name="Penguin"/>
 		<Sprite id="9B" src="9B" name="Shiver Toad"/>
-		<Sprite id="9C" src="9C" name="Alt Bandit"/>
+		<Sprite id="9C" src="9C - Tatanga" name="Tatanga"/>
 		<Sprite id="9D" src="9D" name="Goompapa"/>
 		<Sprite id="9E" src="9E" name="Goombaria"/>
 		<Sprite id="9F" src="9F" name="Goomama"/>
@@ -232,7 +232,7 @@
 		<Sprite id="E5" src="E5" name="Parade Wizards"/>
 		<Sprite id="E6" src="E6" name="Parade Mario"/>
 		<Sprite id="E7" src="E7" name="Parade Shy Guys"/>
-		<Sprite id="E8" src="E8" name="Parade Twink"/>
+		<Sprite id="E8" src="E8 - Star Zone Star" name="Star Zone Star"/>
 		<Sprite id="E9" src="E9" name="Leaf"/>
 	</NpcSprites>
 	<PlayerSprites>

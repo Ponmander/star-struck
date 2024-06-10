@@ -1,0 +1,165 @@
+% % Change the flame color (used by Bonetail and Bowser)
+% % Set *FireBreathColor colorID
+% % 0 = Orange (Default)
+% % 1 = Green
+% % 2 = Purple
+% % 3 = White
+% % 4 = Blue
+% % 5 = Black and White (Used by BowserBP)
+% %
+% % Flames are divided in 2 colors one for the outlines
+% % and the other one for the body, each one use
+% % 3 bytes as RGB values.
+% %
+% % Call  PlayEffect 	( ~FX:FireBreath ... )
+% @Function 373158 % E006E9C8
+% {
+% LIO  T7 $Function_PlayFX_Flame_Color1 % Flame color 1 (body)
+% JR   T7
+% NOP
+% }
+
+% @Function 373198 % E006EA08
+% {
+% LIO  T7 $Function_PlayFX_Flame_Color2 % Flame color 2 (outline)
+% JR   T7
+% NOP
+% }
+
+% #new:Function $Function_PlayFX_Flame_Color1
+% {
+% PUSH    V0, V1, A0, A1, A2, A3, RA
+% LIO     A1, *FireBreathColor
+% JAL     ~Func:get_variable
+% RESERVED
+% COPY    T7, V0
+% POP     V0, V1, A0, A1, A2, A3, RA
+% BNE     T7, R0, .Green
+% NOP
+% .Orange
+% % vanilla code
+% % Flame Body Color
+% LBU	    V0, 0067 (S4)
+% LBU	    A1, 006B (S4)
+% LBU	    A3, 006F (S4)
+% BEQ     R0, R0, .End
+% NOP
+% .Green
+% ORI     T1, R0, 1
+% BNE     T7, T1, .Purple
+% NOP
+% % Flame Body Color
+% ORI     V0, R0, 50 % R
+% ORI     A1, R0, 87 % G
+% ORI     A3, R0, 63 % B
+% BEQ     R0, R0, .End
+% NOP
+% .Purple
+% ORI     T1, R0, 2
+% BNE     T7, T1, .White
+% NOP
+% % Flame Body Color
+% ORI     V0, R0, 87 % R
+% ORI     A1, R0, 50 % G
+% ORI     A3, R0, 87 % B
+% BEQ     R0, R0, .End
+% NOP
+% .White
+% ORI     T1, R0, 3
+% BNE     T7, T1, .Blue
+% NOP
+% % Flame Body Color
+% ORI     V0, R0, E0 % R
+% ORI     A1, R0, E0 % G
+% ORI     A3, R0, E0 % B
+% BEQ     R0, R0, .End
+% NOP
+% .Blue
+% ORI     T1, R0, 4
+% BNE     T7, T1, .BW
+% NOP
+% % Flame Body Color
+% ORI     V0, R0, 35 % R
+% ORI     A1, R0, E1 % G
+% ORI     A3, R0, EE % B
+% BEQ     R0, R0, .End
+% NOP
+% .BW
+% % Flame Body Color
+% ORI     V0, R0, 0 % R
+% ORI     A1, R0, 0 % G
+% ORI     A3, R0, 0 % B
+% .End
+% LIO     T7, E006E9D8
+% JR      T7
+% LBU	    T0, 0043 (S4) % flame alpha color?
+% }
+
+% #new:Function $Function_PlayFX_Flame_Color2
+% {
+% PUSH    V0, V1, A0, A1, A2, A3, RA
+% LIO     A1, *FireBreathColor
+% JAL     ~Func:get_variable
+% RESERVED
+% COPY    T7, V0
+% POP     V0, V1, A0, A1, A2, A3, RA
+% BNE     T7, R0, .Green
+% NOP
+% .Orange
+% % vanilla code
+% % Flame Outline Color
+% LBU	    A3, 0073 (S4)
+% LBU	    T0, 0077 (S4)
+% LBU	    T1, 007B (S4)
+% BEQ     R0, R0, .End
+% NOP
+% .Green
+% ORI     T1, R0, 1
+% BNE     T7, T1, .Purple
+% NOP
+% % Flame Outline Color
+% ORI     A3, R0, 1D % R
+% ORI     T0, R0, 41 % G
+% ORI     T1, R0, 3D % B
+% BEQ     R0, R0, .End
+% NOP
+% .Purple
+% ORI     T1, R0, 2
+% BNE     T7, T1, .White
+% NOP
+% % Flame Outline Color
+% ORI     A3, R0, 41 % R
+% ORI     T0, R0, 1D % G
+% ORI     T1, R0, 40 % B
+% BEQ     R0, R0, .End
+% NOP
+% .White
+% ORI     T1, R0, 3
+% BNE     T7, T1, .Blue
+% NOP
+% % Flame Outline Color
+% ORI     A3, R0, 76 % R
+% ORI     T0, R0, 76 % G
+% ORI     T1, R0, 76 % B
+% BEQ     R0, R0, .End
+% NOP
+% .Blue
+% ORI     T1, R0, 4
+% BNE     T7, T1, .BW
+% NOP
+% % Flame Outline Color
+% ORI     A3, R0, 26 % R
+% ORI     T0, R0, 77 % G
+% ORI     T1, R0, 7D % B
+% BEQ     R0, R0, .End
+% NOP
+% .BW
+% % Flame Outline Color
+% ORI     A3, R0, FF % R
+% ORI     T0, R0, FF % G
+% ORI     T1, R0, FF % B
+% .End
+% LIO     T7, E006EA18
+% JR      T7
+% ADDIU	V0, A2, 0018 % vanilla code
+% }

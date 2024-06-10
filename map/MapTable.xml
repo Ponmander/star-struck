@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <MapTable>
 	<Area name="kmr" nickname="Goomba Region">
 		<Map name="kmr_00" nickname="Forest Clearing" flags="1"/>
@@ -568,6 +568,9 @@
 		<Map name="tst_13" nickname="Partners and Shockwave"/>
 		<Map name="tst_20" nickname="Pipes Gallery"/>
 	</Area>
+	<Area name="stz" nickname="Star Zone">
+		<Stage name="stz_bt00"/>
+	</Area>
 	<Resource name="mac_tex" compressed="false"/>
 	<Resource name="tik_tex" compressed="false"/>
 	<Resource name="kgr_tex" compressed="false"/>
@@ -623,4 +626,6 @@
 	<Resource name="party_akari" compressed="true"/>
 	<Resource name="party_opuku" compressed="true"/>
 	<Resource name="party_pokopi" compressed="true"/>
+	<Resource name="stz_tex" compressed="false"/>
+	<Resource name="stz_bg" compressed="true"/>
 </MapTable>

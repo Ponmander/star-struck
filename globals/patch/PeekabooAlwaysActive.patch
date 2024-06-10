@@ -1,0 +1,11 @@
+@Function:Battle 80253C20 %is_actor_health_bar_visible
+{
+    JR RA
+    ORI v0, r0, 1
+}
+
+@Function:Battle 80253C9C %is_actortype_health_bar_visible
+{
+    JR RA
+    ORI v0, r0, 1
+}
